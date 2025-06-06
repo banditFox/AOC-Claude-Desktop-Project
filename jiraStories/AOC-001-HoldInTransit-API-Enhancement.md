@@ -2,7 +2,7 @@
 
 ---
 
-As a **Solution Owner**, I would like to **enhance the backend API to include database calls to the 'holdInTransit' table** so that **the system can properly track and manage cases that are temporarily held during processing**.
+As a **court clerk**, I would like to **enhance the backend API to include database calls to the 'holdInTransit' table** so that **the system can properly track and manage cases that are temporarily held during processing**.
 
 # **Out of Scope**
 
