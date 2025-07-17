@@ -1,0 +1,356 @@
+Josh Chrestman 00:00:03
+That doesn't have anything to do with disbursement, I would think.
+
+Mukesh Patel 00:00:06
+Well, in your credit card money also, we need to disburse, right? Because we can steal that money. We reconcile that money.
+
+Josh Chrestman 00:00:15
+But, like, I guess my concern is, I mean, I guess it goes back to the whole editing a deposit. It's like if you've created a check with money that you had, and then now they've disputed that charge, and for some reason the credit agency was like, yeah, okay. You shouldn't have paid to the court, I guess.
+
+Lars Hultqvist 00:00:46
+Then, like, we have to short, yeah. They took it out of my bank account. And I have always disbursed them. $10,000 I disbursed, but the credit card for $500 was voided. So now I'm short $500. So we just have to short them this month when we deposit. And we have to short them with the same kind of reimbursement.
+
+Lars Hultqvist 00:01:20
+Because it's not as easy as you pay $500 to one person. The $500 might have been going to five different checks.
+
+Josh Chrestman 00:01:28
+Yeah, that sounds like a fun time.
+
+Mukesh Patel 00:01:32
+Correct, correct. You need to find that receipt that when you reconcile, right, you will have a record of that and how you made the decision for that receipt. That's what the information we have in our distribution general receipt transaction table, correct? So you have to find that receipt, basically, that you are voiding, that you check already. You find that, and then whichever DJ affecting, basically, you basically reverse those in the posting period that you void.
+
+Mukesh Patel 00:02:10
+That's how we need to handle it, basically. In that posting period, whatever money you're going to pay to the payee for postage accounts, you will give them that much money less.
+
+Lars Hultqvist 00:02:26
+Hey, Robert, do you mind putting the link to that theme up under that so we can... Because there was quite a lot of information listed in that theme about what the requirements were.
+
+Robert Mullins 00:02:42
+For chart-up accounts.
+
+Lars Hultqvist 00:02:50
+No, that's not it.
+
+Mukesh Patel 00:02:52
+That's how we're going to handle this.
+
+Lars Hultqvist 00:02:58
+Was it... PO7. If you go to that list, I probably can recognize it. Or PO9, I don't remember.
+
+Robert Mullins 00:03:09
+This dashboard does weird stuff. What does P stand for? Priority.
+
+Josh Chrestman 00:03:21
+So would we have to do anything differently than existing.
+
+Lars Hultqvist 00:03:26
+We don't have a way to revert DJs for a new paid period. So this is just doing the void from the... PO9. Look at PO9. Second PO9, I think.
+
+Robert Mullins 00:03:44
+Oh, there's two PO9s. Penalty adjustments.
+
+Lars Hultqvist 00:03:48
+I think so.
+
+Robert Mullins 00:03:49
+There's dispersing bonds and then penalty adjustments. So you want this one.
+
+Lars Hultqvist 00:04:04
+No, not 0.9. Yeah. It must be a different one. It's so hard to find those. Can we go back to the big list again.
+
+Speaker 5 00:04:20
+Mm-hmm.
+
+Lars Hultqvist 00:04:24
+Is it P10.
+
+Mukesh Patel 00:04:25
+It's a P10, yeah. It's a P10.
+
+Robert Mullins 00:04:27
+Disbursement.
+
+Mukesh Patel 00:04:29
+Yeah. Disperse money.
+
+Lars Hultqvist 00:04:32
+It is disperse the money. Yeah. There's quite a lot of information here.
+
+Robert Mullins 00:04:45
+Is that an end-of-month thing.
+
+Mukesh Patel 00:04:50
+No, this is regular white receipts. Robert, basically. Okay. And then you vote the receipt in to see whether, and I think that's what. was that this is the difference just with the current void and then this scenario void in um, we need to check if when you're avoiding the receipt to see if that receipt is involved, first point of money basically that means it is reconciled right um so if i'm avoiding the.
+
+Mukesh Patel 00:05:25
+receipt with the reconciliation status or reconcile status i need to check to see if, that money has already been dispersed then you have a one effect if it is not, then you have i think it shouldn't matter i guess because for us we just subtract the money in for disposable for the posting period that you're avoiding the receipt.
+
+Josh Chrestman 00:06:00
+it well you would want it to be for the current posting period though i thought because no yes. because you need to be short when you send them the money yeah yeah so let's say i i issued the.
+
+Mukesh Patel 00:06:17
+receipt right on 17th for example and i i i went down online and i would cancel everything right, and so i put it in now july posting video for the disbursement correct now on 31st july let's say they disputed the transaction received now i'm voiding now it is still i'm waiting on july 31st so that's still july month so i'm going to reduce in the same posting period correct.
+
+Lars Hultqvist 00:06:52
+but that's not the problem the problem is uh if you did in august.
+
+Mukesh Patel 00:07:00
+Yeah, but right now, Lars, we are not voiding any reconciled estate.
+
+Josh Chrestman 00:07:06
+But wouldn't that be more of a problem if you've already reconciled and then you void in the same month.
+
+Lars Hultqvist 00:07:18
+There's not a business problem because you haven't cut the check, unless you've cut the check.
+
+Josh Chrestman 00:07:25
+That's what I mean. Like, if you've already cut the check.
+
+Lars Hultqvist 00:07:29
+If you've cut the check, that's a problem because you're not going to get the FAA to pay you back. Yeah, that's why I said.
+
+Mukesh Patel 00:07:36
+Yeah, so I think when scenario where we're trying to void the reconciled receipt, we need to check. First check would be that, is that we have dispersed that money? we issued the check for that receipt to pay. If yes, if yes, well, I mean, if that's the scenario,
+
+Mukesh Patel 00:08:17
+then I think it's always going to be to do composting with it, I feel like. They would have to. They have to, right? Because they're not going to disperse the money until the month ends, basically. So if we didn't say month, it doesn't matter. We just reduce the balance for the disposable. And when they write the check, they automatically.
+
+Josh Chrestman 00:08:40
+But this is in the case that they have written the check because it's different accounting period, which I mean, unless they are really behind, I guess.
+
+Mukesh Patel 00:08:54
+Yeah, but still in both scenarios, it shouldn't matter because what- Every month that you are voiding that receipt, you reduce the disposable amount.
+
+Josh Chrestman 00:09:07
+Yeah, that's what I was meaning, because you said the original posting period, but like wouldn't it be the one you're in.
+
+Mukesh Patel 00:09:15
+No, one that you're voiding, that posting period, you're going to reduce the disposable amount. Because that posting period, you haven't got the cheque yet, so money that you need to recover from the payee, now you're going to pay them less in the next posting period. So that would cover basically recovering money from back from payee.
+
+Speaker 5 00:09:48
+Covid makes sense.
+
+Mukesh Patel 00:10:00
+last i mean are you are you thinking this is the next priority no i mean the next priority would.
+
+Lars Hultqvist 00:10:11
+be that we have to finish whatever we have to close up in general led yourself now uh refund right we found this the highest priority i would think well we already bought that uh requirement.
+
+Mukesh Patel 00:10:24
+part right this is already fine okay you did that last week when i was home i did not reply i i just put i haven't defined anything i just put my views okay so let's let's go through that with.
+
+Lars Hultqvist 00:10:38
+you and josh if we can do it with kishore holding his hand up oh go ahead yeah like uh as you just.
+
+Kishore Mandagula 00:10:51
+mentioned you know uh for example we void check this month and after this question so we gonna, less the money for the next question period, right? Yes. Yeah, so is it, you know, currently is this happening in context as well, or is it no thing we are proposing? I mean, I don't want to be.
+
+Lars Hultqvist 00:11:17
+sounding rude, but according to the indications we get from Tim, it's irrelevant, because it's not satisfied with us just doing functionality, the context is doing.
+
+Kishore Mandagula 00:11:30
+he wants us to do the right way. Yeah, so, I mean, okay, so in that case, you know, I mean, I will remind the stakeholders that we don't do like this. We have to do that. You know.
+
+Lars Hultqvist 00:11:51
+all these epics and themes, they were developed by the stakeholders like two years ago. Yeah. so that's requirements on a high level that they have for the work we're doing and you see that, p10 uh and i think tim has mentioned it recently that this this is an absolute requirement but last.
+
+Mukesh Patel 00:12:19
+isn't it we have to do that how that means you're able to manage that money yeah we have to do it.
+
+Lars Hultqvist 00:12:26
+i just said it maybe it's not the thing we need to do later today or next week so.
+
+Mukesh Patel 00:12:33
+if so your question regarding with the context in handling or not i think we don't care we as a.
+
+Kishore Mandagula 00:12:41
+in a new system we have to do it yeah yeah i agree but uh are you gonna take uh the agreement on that agreement means i'm sorry you know the lady planned you know that we gonna detect money. how else he can do it yeah i mean i i completely you know i'm in line with you but i'm do we need.
+
+Kishore Mandagula 00:13:16
+to inform or what do you mean we can yeah we can talk we will inform him that he has posted this.
+
+Mukesh Patel 00:13:24
+requirement i don't understand your question no no he's saying the solution that we are coming up with i think that's what he wants to see whether you need to confirm that yeah yeah sure people coming off yeah my question is this is all going to be back in there is nothing to do with the design in this scenario correct um so um yeah we will let them know okay hey you know we have covered this scenario and this is how we have covered it basically uh now in order to they.
+
+Mukesh Patel 00:13:56
+i'm i'm expecting they will ask are we tracking this, And I would say yes, we are because that's the reason we have those projects and tables that I can tell Oh for this receipt ID student this date or it deposited in this daily because on this date It is shoot the check on this date now I avoided this on this date and it reversed all these DJs in this posting fear You know, so we are we tracking that information? Yes, we are.
+
+Mukesh Patel 00:14:27
+now we don't have that void scenario here to be, Coded basically, you know.
+
+Lars Hultqvist 00:14:36
+For I agree with you that probably 90% of this is going to be back-end only, But there's likely that we need to have some type of report where you can go and look up What was the Easter period voids that happened and how did we kind of cater for it? some type of you know, checks and balance, at least from an um from an auditing perspective something they probably would like to see yeah.
+
+Lars Hultqvist 00:15:11
+then they need to tell us what kind of report they want and then we'll do it definitely yeah no I'm not going to tell you but but that's something we probably should bring up with.
+
+Mukesh Patel 00:15:23
+like swarm or something like that how do you want you know my thing is I'm sorry to interrupt but if I'm tracking my receipt right that receipt will tell me basically in which posting period I visited this money in which posting period I reconciled which become disposable in posting posting period in which posting period become disposable or reconcile and then oh okay I should check for this receipt on such and such date to this payee now I avoid it in this posting.
+
+Mukesh Patel 00:16:00
+and it affected this payee and this DJ in the new posting period. So we, of course, we don't have that receipt history, I would say.
+
+Kishore Mandagula 00:16:20
+We have that, that should cover it. Yeah, Mukesh, I have, for example, we have a calculation of $500 for this month. Out of that $500, one receipt got voided of $10. So next month, for example, I have to pay $1,000. Instead of that, I'm paying $990. But in my dispersible, I have each and every receipt.
+
+Kishore Mandagula 00:17:00
+uh about and we have a transaction level uh financial details of, financial level details but you know if we're deducting ten thousand uh ten dollars from the next month so from which receipt we do it or are we you know how are you sure are you going to.
+
+Lars Hultqvist 00:17:21
+inform that i'll be sure and everybody i don't think i'm sorry i don't want to sound rude or something but i don't think this is the meetings to do solutions right we're looking to this meeting to kind of see what what is the upcoming work and what at least i thought of it that's what we're doing what is the upcoming work and in what priority are we going to start working on that so we can get some guidance for our overview of mirror flows and refining stories because otherwise we.
+
+Lars Hultqvist 00:17:51
+we just get into once one of these things we're going to work on and we don't know when we're going to work on it but we can, talk about that forever.
+
+Josh Chrestman 00:18:01
+I mean, weren't we just doing the same thing at the beginning.
+
+Lars Hultqvist 00:18:06
+What do you mean, at the beginning.
+
+Josh Chrestman 00:18:10
+I'm just saying, I mean, we were literally trying to solution for interperiod voids.
+
+Lars Hultqvist 00:18:17
+I know, I know, but now we've been talking about it for almost a whole meeting, so maybe... Okay, what else do we have? Let's move forward.
+
+Robert Mullins 00:18:28
+What about closing off on all our GL flows? Are we still looking at some of those GL items? Yes. So, close off on the tables to solution through these. This is done. Are we done with the tables? This is here.
+
+Lars Hultqvist 00:18:52
+I don't know, is the cache maybe started.
+
+Josh Chrestman 00:18:54
+I thought our refund was also going in the same tables.
+
+Lars Hultqvist 00:19:01
+Oh, I'm thinking about the table to kind of support this page that he's done.
+
+Josh Chrestman 00:19:08
+Oh, right. Sorry, I forgot.
+
+Speaker 5 00:19:21
+Okay, whatever.
+
+Josh Chrestman 00:19:27
+Do you have any transactions? Have we done that.
+
+Mukesh Patel 00:19:38
+We, I don't know. That's a good question.
+
+Josh Chrestman 00:19:42
+I'll look into it.
+
+Mukesh Patel 00:19:47
+This was a good data. This was a, and we updated the design where we removed assets and amounted to you at the receipt level, right.
+
+Lars Hultqvist 00:20:00
+it'd be nice to have a lead here. Yeah Robert, one of the things I mean I think we're trying to kind of find our new way of working together now because Kishore did it her way you know, so I don't know if the rest of the team agrees about this but in this list you have it would be nice that we have kind of like somehow relating to those remaining work that is per themes right.
+
+Lars Hultqvist 00:20:31
+it when we looked together with the leadership Tuesday they had everything was gone how far are you on this theme and what is left to do is it possible I know you don't do it right now but it's possible to kind of reflect that in this list so we can go back and like you did a link here for the inter period voids and stuff is that something we could do or does that sound like a good idea.
+
+Robert Mullins 00:21:00
+idea. I was thinking about that just yesterday. Okay. You know, and you're right, you know, this is, we're doing kind of a new way of working, and before we just, you know, Kishore and Liz just, piled through, you know. From their mind. Yeah, and we're just trying to catch up, so, and this task list, I understand, looks like absolute crap, because I'm just throwing stuff on there as Kishore's bringing it up, and she's not really explaining me or, you know, understanding. I don't,
+
+Robert Mullins 00:21:31
+you know, and it was real hard to get a hold of her sometimes, so I'm hoping, my hope is that, yeah, we're going to go through epics, and we're going to be able to connect this to these epics and what we have left on them, so that the whole team kind of understands where we're at, but yeah, I agree with you 100. I guess I told that long stupid story to tell you I agree with you 100.
+
+Lars Hultqvist 00:22:00
+No, that's good. Great. The rest of you guys think that would be a good idea to get better transparency for all of us to know. Because it's hard to do priority if you don't have those kind of links. Yeah, it's kind of sad that it was just in Kishore's head and not on paper.
+
+Josh Chrestman 00:22:22
+We could also just, maybe we should consider reviewing the dashboard in this meeting also. Yeah, yeah. For the priorities. And then anytime we have a tab on this page, maybe link the story. Yeah. Sort of like you did on the GL flow thing. Yeah. And if a story isn't made, link the story, link to the story here, but it might be valuable to link from the story back to here.
+
+Robert Mullins 00:22:58
+Yeah, I think.
+
+Lars Hultqvist 00:23:00
+I know that's a lot. A little bit rabbit hole, but I was checking up what Mukesh was asking about. So it says the amount of distribution journal posting period is still there. We haven't taken that out. Was that not what you asked, Mukesh.
+
+Mukesh Patel 00:23:17
+Yes.
+
+Lars Hultqvist 00:23:18
+Yeah, it's still there. I'm surprised. I thought we had a story to review that.
+
+Mukesh Patel 00:23:26
+Yeah, we have so many stories to do so many things. We don't know what those are.
+
+Robert Mullins 00:23:32
+Yeah. Yeah, I think it'll start being more clear as we're working together to get all that lined out. You know what I mean.
+
+Lars Hultqvist 00:23:42
+Another thing, and I'm sorry I'm deviating a little bit here again, but another thing that I'm worried about, and I share this with at least Mukesh and maybe Josh, you know, we're working through this typical business-related functionality because that's what Martin or Stakehold... look at, right? But there are certain things that when all that is completed and they think we're ready to go live, I'm keep harping about this. We need to have an interface to update certain.
+
+Lars Hultqvist 00:24:14
+configurations. And I'm thinking specifically on the court deviations, the court-specific penalties, the court-specific penalty enhancement. We can do a lot from the database side. I can set up new bank accounts using just the database. I can set up new distribution journals, just running the end points, but you're not going to be able to do this configuration from the database side.
+
+Mukesh Patel 00:24:41
+Okay, that's, why don't you create an epic for the accounting configuration, basically? That's what I would like to do, yeah. Have you devised the configuration yet? I thought so. No, Robert.
+
+Robert Mullins 00:25:00
+I missed that very last part, but you're talking about a configuration. Go ahead.
+
+Mukesh Patel 00:25:07
+Sorry, Robert.
+
+Robert Mullins 00:25:08
+No, go ahead.
+
+Mukesh Patel 00:25:09
+Is it we need to ask Lilo to create the new Epic, or he can do that.
+
+Robert Mullins 00:25:16
+I can do that.
+
+Lars Hultqvist 00:25:17
+I was about to bring this up Tuesday because I think it is so important, but I decided not to do it. But I think when it's brought up, we can't just not say, like, hey, we need an Epic for configuration because they're going to say, oh, we're going to fix that somehow. There's going to be a few cores the first time we can do it from the database or something, but they don't understand. And you guys, if you have looked into the tables, if you haven't gone and looked into the tables for core-specific enhancements, you are not going to be able to do that from the database side.
+
+Lars Hultqvist 00:25:49
+for several different cores. You have to do an interface or not.
+
+Mukesh Patel 00:25:53
+So, Lars, at least if we create the Epic and maybe put a few requirements. and stories you know at least that will give them idea that okay yes this is important piece that we need to work on at some point hopefully okay if they want to do it like five quotes manually okay that's fine but it but we have you can't do it without me guys you cannot do my course manually understand but again you can't do one course manually i agree but for their understanding that's how we i think we should approach so that way at least they know that.
+
+Mukesh Patel 00:26:28
+that we have this major thing needs to be done as soon as possible like they started doing person management for example same thing they have to do with this code.
+
+Lars Hultqvist 00:26:39
+code accounting configuration management i just wanted to raise the flag because i think, i kind of know how they react and i think there's a high risk we're going to say like it's going to be so few courts we don't need configuration management at this time, but they don't understand, complexity.
+
+Mukesh Patel 00:27:00
+trying to do this from the database but i agree but if we can able to create a pic, we should create and then add it into the list that's it and then they can if they want to read in mmr 30 that's fine but at least we have a raise the flag that's saying this is required.
+
+Josh Chrestman 00:27:34
+or we built the entire solution and then ask them if they like it so they can't tell us no i i don't.
+
+Lars Hultqvist 00:27:45
+think i don't know if you haven't looked at what i'm talking about in the database i don't think that it's easy to understand until you do that i know. Yeah, I think you know that, but I know leadership doesn't understand that, and it's important to avoid the backlash and getting them back and say we don't need that right now, there's so few courts.
+
+Mukesh Patel 00:28:17
+And they will keep saying that, let me tell you that.
+
+Lars Hultqvist 00:28:22
+Yeah, well, we would go live and the court we went live with will complain and say that's not how we handle speed limits, that's not how we handle weight limits, and they're going to be angry and say, oh, we don't want to use this system anymore, that has happened before.
+
+Mukesh Patel 00:28:44
+Okay. But bottom line is, can we create a pick ourself or no.
+
+Robert Mullins 00:28:51
+Yes.
+
+Mukesh Patel 00:28:54
+So last, now collectively, should we decide and create the system or not? new epic for this good position yeah good good configuration for accounting that become that will be the heading on the end you start that it's going to be in core part of it is in core very likely for assessment it is in core.
+
+Mukesh Patel 00:29:26
+mostly and then for for disperse many days in in a complex site this is done, so so Robert did you get the header on that yeah go ahead and say it to me one.
+
+Robert Mullins 00:29:43
+more time though because I had to I have to create a whole I had to create some other things to attach it to accounting you know I mean okay but go ahead the.
+
+Mukesh Patel 00:29:56
+configuration for accounting last is that sound okay, you don't uh you want something else applicator uh i guess for now we can call it that you know.
+
+Lars Hultqvist 00:30:12
+okay okay but it's important it's important to kind of explain that this is not, configuration is going to cover all of it because i don't care about if we have to set up the bank accounts from the database that we can do that take a couple of minutes. can you take a five minute break now yeah yes sir okay see you at stanham you bet thanks guys
